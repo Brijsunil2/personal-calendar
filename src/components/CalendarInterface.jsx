@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { generateCalendarList } from "../utils/CalendarUtils";
 
-const Calendar = () => {
+const CalendarInterface = () => {
   const DAYS = [
     "Monday",
     "Tuesday",
@@ -30,16 +31,19 @@ const Calendar = () => {
   const [calendarDate, setCalendarDate] = useState(
     new Date(currDate.getFullYear(), currDate.getMonth(), 1)
   );
-  const [calendarArr, setCalendarArr] = useState();
-  
+  const [calendarList, setCalendarList] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCurrDate(new Date());
-    }, 1000);
-  }, [currDate, setCurrDate]);
+    setCalendarList([...generateCalendarList(calendarDate)]);
+  }, [calendarDate]);
 
-  return <div>hello</div>;
+  return (
+    <div>
+      {calendarList.map((item, i) => (
+        <h3 key={i}>{item.date.getDate()}</h3>
+      ))}
+    </div>
+  );
 };
 
-export default Calendar;
+export default CalendarInterface;
